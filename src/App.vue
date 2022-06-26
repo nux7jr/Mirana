@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="gradient">
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -14,17 +14,32 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #dedfe0;
-  background: rgb(86, 81, 164);
-  background: linear-gradient(
-    90deg,
-    rgba(86, 81, 164, 1) 0%,
-    rgba(0, 0, 0, 1) 5%,
-    rgba(0, 0, 0, 1) 48%,
-    rgba(0, 0, 0, 1) 96%,
-    rgba(141, 111, 204, 1) 100%
-  );
+  color: #ffffff;
   min-height: 100vh;
+}
+.gradient {
+  width: 100%;
+  background: linear-gradient(
+    149deg,
+    rgba(24, 187, 156, 1) 0%,
+    rgba(106, 57, 175, 1) 42%,
+    rgba(187, 24, 148, 1) 72%,
+    rgba(115, 53, 134, 1) 100%
+  );
+  animation: gradient 15s infinite linear;
+  background-size: 400%;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 80% 0%;
+  }
+  50% {
+    background-position: 20% 100%;
+  }
+  100% {
+    background-position: 80% 0%;
+  }
 }
 body {
   padding: 0;
@@ -54,14 +69,18 @@ img {
   height: auto;
 }
 #nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
   padding: 30px;
 
   a {
     font-weight: bold;
-    color: #d6dde4;
+    color: #ffffff;
 
     &.router-link-exact-active {
-      color: #757977;
+      color: #bec2c0;
     }
   }
 }

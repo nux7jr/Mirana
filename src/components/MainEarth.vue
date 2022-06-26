@@ -2,11 +2,11 @@
   <div class="main">
     <h1>Earth</h1>
     <div class="main__media">
-      <!-- <img
+      <img
         class="main__img"
         src="https://api.nasa.gov/EPIC/archive/natural/2019/05/30/png/epic_1b_20190530011359.png?api_key=n4vyXT7xMphVZN3IZIUaQW7pBJvSAAeuxhz9HZsI"
         alt=""
-      /> -->
+      />
     </div>
     <div v-for="item in data" :key="item.id">
       <div><h2>elem</h2></div>
@@ -68,6 +68,8 @@ export default {
 }
 img {
   margin: 0 auto;
+  border-radius: 100%;
+  box-shadow: 0 0 0 3px rgb(0, 0, 0), 0 0 13px #333; /* Параметры теней */
 }
 .setDate {
   width: 60%;
