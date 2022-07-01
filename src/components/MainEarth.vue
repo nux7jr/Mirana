@@ -1,34 +1,64 @@
 <template>
   <div class="main">
     <h1>Earth</h1>
-    <div class="main__media">
-      <img
-        class="main__img"
-        src="https://api.nasa.gov/EPIC/archive/natural/2019/05/30/png/epic_1b_20190530011359.png?api_key=n4vyXT7xMphVZN3IZIUaQW7pBJvSAAeuxhz9HZsI"
-        alt=""
-      />
-    </div>
-    <div v-for="item in data" :key="item.id">
-      <div><h2>elem</h2></div>
-      date: {{ item.date }} name: {{ item.image }}
-      <img src="" alt="" />
+    <div v-for="(item, index) in data" v-bind:key="item.id">
+      <div v-show="index == valueDate">
+        <img
+          class="main__media"
+          :src="`https://epic.gsfc.nasa.gov/archive/natural/2020/10/31/jpg/${item.image}.jpg`"
+          alt="img"
+        />
+      </div>
     </div>
     <div class="slidecontainer">
       <input
         class="setDate"
         type="range"
-        min="1"
-        max="12"
+        min="0"
+        max="11"
         range="1"
-        value="1"
+        value="0"
         v-model.number="valueDate"
       />
     </div>
-    <div>{{ valueDate }}</div>
-    <div><button>setUrl</button> <button>setUrl</button></div>
-    <div>{{ currUrl }}</div>
-    <input type="date" name="date" id="" v-model="inputDate" />
-    <div>{{ inputDate }}</div>
+    <div>
+      <form @submit.prevent="sendData">
+        <div class="form__item">
+          <label class="form__label" for="year">Год</label>
+          <input
+            class="form__input"
+            type="text"
+            id="year"
+            v-model="userFormDate.userYear"
+            required
+          />
+        </div>
+        <div class="form__item">
+          <label class="form__label" for="month">Месяц</label>
+          <input
+            class="form__input"
+            id="month"
+            type="text"
+            v-model="userFormDate.userMonth"
+            required
+          />
+        </div>
+        <div class="form__item">
+          <label class="form__label" for="day">Число</label>
+          <input
+            class="form__input"
+            type="text"
+            id="day"
+            v-model="userFormDate.userDay"
+            required
+          />
+        </div>
+        <button class="form__btn">Отправить</button>
+      </form>
+    </div>
+    {{ userFormDate.userYear }}
+    {{ userFormDate.userMonth }}
+    {{ userFormDate.userDay }}
   </div>
 </template>
 <script>
@@ -38,11 +68,16 @@ export default {
   name: "Earth",
   data() {
     return {
-      valueDate: 1,
+      userFormDate: {
+        userYear: "2020",
+        userMonth: "10",
+        userDay: "31",
+      },
+      valueDate: 0,
       inputDate: "",
-      defaultMaxRange: 12,
+      formDateUrl: "",
       data: [],
-      currUrl: "https://api.nasa.gov/EPIC/api/natural/date/2021-10-31",
+      currUrl: "https://api.nasa.gov/EPIC/api/natural/date/2020-10-31",
       apiKey: "n4vyXT7xMphVZN3IZIUaQW7pBJvSAAeuxhz9HZsI",
     };
   },
@@ -50,8 +85,12 @@ export default {
     const res = await axios.get(this.currUrl + "?api_key=" + this.apiKey);
     this.data = res.data;
     console.log(this.data);
-    this.defaultMaxRange = this.data.length;
-    console.log(this.defaultMaxRange);
+    this.myTrue = true;
+  },
+  methods: {
+    getData() {
+      console.log("getData");
+    },
   },
 };
 </script>
@@ -62,16 +101,16 @@ export default {
 }
 .main__media {
   display: block;
-  width: 70%;
-  height: 70%;
+  max-width: 40%;
+  max-height: 40%;
   margin: 0 auto;
 }
 img {
   margin: 0 auto;
   border-radius: 100%;
-  box-shadow: 0 0 0 3px rgb(0, 0, 0), 0 0 13px #333; /* Параметры теней */
+  box-shadow: 0 0 0 3px rgb(0, 0, 0), 0 0 13px #333;
 }
 .setDate {
-  width: 60%;
+  width: 150px;
 }
 </style>

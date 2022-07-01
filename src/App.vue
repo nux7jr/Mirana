@@ -26,7 +26,7 @@
     rgba(187, 24, 148, 1) 72%,
     rgba(115, 53, 134, 1) 100%
   );
-  animation: gradient 15s infinite linear;
+  animation: gradient 10s infinite linear;
   background-size: 400%;
 }
 
@@ -80,7 +80,7 @@ img {
     color: #ffffff;
 
     &.router-link-exact-active {
-      color: #bec2c0;
+      color: #d4dbd8;
     }
   }
 }
