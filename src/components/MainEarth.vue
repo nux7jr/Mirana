@@ -3,14 +3,10 @@
     <h1>Earth</h1>
     <div class="Earth" v-if="isLoading === false">
       <div v-for="(item, index) in planetData" v-bind:key="item.id">
-        <div class="earth__img" v-show="index == hoursValue">
+        <div class="earth__wrapper" v-show="index == hoursValue">
           <img
             class="main__media"
-            :src="
-              index == hoursValue
-                ? `https://epic.gsfc.nasa.gov/archive/natural/${userFormDate.userYear}/${userFormDate.userMonth}/${userFormDate.userDay}/jpg/${item.image}.jpg`
-                : null
-            "
+            :src="`https://epic.gsfc.nasa.gov/archive/natural/${userFormDate.userYear}/${userFormDate.userMonth}/${userFormDate.userDay}/jpg/${item.image}.jpg`"
             alt="img"
           />
         </div>
@@ -75,7 +71,6 @@
 </template>
 <script>
 import axios from "axios";
-
 export default {
   name: "Earth",
   data() {
@@ -105,7 +100,6 @@ export default {
       this.isLoading = false;
       this.planetData = res.data;
       this.hoursValue = 0;
-      console.log(this.planetData);
     },
   },
 };
@@ -126,7 +120,7 @@ img {
 .setDate {
   width: 150px;
 }
-.earth__img {
+.earth__wrapper {
   background-color: black;
   border-radius: 50%;
   height: 954px;
