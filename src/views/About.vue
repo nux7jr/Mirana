@@ -17,6 +17,7 @@ export default {};
 </script>
 <style scoped>
 .about__text {
+  text-align: justify;
   margin: 0 auto;
   max-width: 60%;
   padding: 5px;

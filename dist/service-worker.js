@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.7847942306095a9822cb71800ce0039b.js"
+  "/precache-manifest.40ee3a6fded1a12e4bb2c8e934e7d83f.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "mirana"});
