@@ -1,20 +1,22 @@
 <template>
   <div class="main">
     <h1>Earth</h1>
-    <div class="Earth" v-if="isLoading === false">
-      <div v-for="(item, index) in planetData" v-bind:key="item.id">
-        <div class="earth__wrapper" v-show="index == hoursValue">
-          <img
-            class="main__media"
-            :src="`https://epic.gsfc.nasa.gov/archive/natural/${userFormDate.userYear}/${userFormDate.userMonth}/${userFormDate.userDay}/jpg/${item.image}.jpg`"
-            alt="img"
-          />
+    <transition name="bounce">
+      <div class="earth" v-if="isLoading === false">
+        <div v-for="(item, index) in planetData" v-bind:key="item.id">
+          <div class="earth__wrapper" v-show="index == hoursValue">
+            <img
+              class="earth__media"
+              :src="`https://epic.gsfc.nasa.gov/archive/natural/${userFormDate.userYear}/${userFormDate.userMonth}/${userFormDate.userDay}/jpg/${item.image}.jpg`"
+              alt="img"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-      <h1>Loading</h1>
-    </div>
+      <div v-else>
+        <h1 class="loading__message">Loading...</h1>
+      </div>
+    </transition>
     <div class="option">
       <div class="slidecontainer">
         <input
@@ -33,7 +35,11 @@
             <label class="form__label" for="year">Year</label>
             <input
               class="form__input"
-              type="text"
+              type="number"
+              maxlength="4"
+              minlength="4"
+              min="2015"
+              max="2022"
               id="year"
               v-model="modalFormDate.userYear"
               required
@@ -44,7 +50,9 @@
             <input
               class="form__input"
               id="month"
-              type="text"
+              type="number"
+              min="01"
+              max="12"
               v-model="modalFormDate.userMonth"
               required
             />
@@ -53,7 +61,9 @@
             <label class="form__label" for="day">Day</label>
             <input
               class="form__input"
-              type="text"
+              type="number"
+              min="01"
+              max="31"
               id="day"
               v-model="modalFormDate.userDay"
               required
@@ -63,10 +73,6 @@
         </form>
       </div>
     </div>
-    <!-- {{ hoursValue }}
-    {{ userFormDate.userYear }}
-    {{ userFormDate.userMonth }}
-    {{ userFormDate.userDay }} -->
   </div>
 </template>
 <script>
@@ -76,19 +82,19 @@ export default {
   data() {
     return {
       modalFormDate: {
-        userYear: "2020",
-        userMonth: "10",
-        userDay: "31",
+        userYear: 2020,
+        userMonth: 10,
+        userDay: 31,
       },
       userFormDate: {
-        userYear: "2020",
-        userMonth: "10",
-        userDay: "31",
+        userYear: 2020,
+        userMonth: 10,
+        userDay: 31,
       },
       isLoading: true,
       hoursValue: 0,
       planetData: [],
-      // currUrl: "https://api.nasa.gov/EPIC/api/natural/date/",
+      currUrl: "https://api.nasa.gov/EPIC/api/natural/date/",
       apiKey: "n4vyXT7xMphVZN3IZIUaQW7pBJvSAAeuxhz9HZsI",
     };
   },
@@ -98,28 +104,17 @@ export default {
   methods: {
     async getData() {
       this.userFormDate.userYear = this.modalFormDate.userYear;
-      this.userFormDate.userYear = this.modalFormDate.userYear;
+      this.userFormDate.userMonth = this.modalFormDate.userMonth;
       this.userFormDate.userDay = this.modalFormDate.userDay;
       const res = await axios.get(
-        `https://api.nasa.gov/EPIC/api/natural/date/${this.userFormDate.userYear}-${this.userFormDate.userMonth}-${this.userFormDate.userDay}` +
+        this.currUrl +
+          `${this.userFormDate.userYear}-${this.userFormDate.userMonth}-${this.userFormDate.userDay}` +
           "?api_key=" +
           this.apiKey
       );
       this.isLoading = false;
       this.planetData = res.data;
       this.hoursValue = 0;
-      // try {
-      //   const res = await axios.get(
-      //     `https://api.nasa.gov/EPIC/api/natural/date/${this.userFormDate.userYear}-${this.userFormDate.userMonth}-${this.userFormDate.userDay}` +
-      //       "?api_key=" +
-      //       this.apiKey
-      //   );
-      //   this.isLoading = false;
-      //   this.planetData = res.data;
-      //   this.hoursValue = 0;
-      // } catch (err) {
-      //   console.error(err);
-      // }
     },
   },
 };
@@ -129,7 +124,7 @@ export default {
   color: white;
   width: 100%;
 }
-.main__media {
+.earth__media {
   display: block;
   margin: 0 auto;
 }
@@ -176,5 +171,22 @@ img {
   background: #f6f6f66b;
   color: white;
   border-radius: 8px;
+}
+.bounce-enter-active {
+  animation: bounce-in 1.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 1.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

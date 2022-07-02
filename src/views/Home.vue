@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <MainEarth />
+    <Earth />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import MainEarth from "@/components/MainEarth";
+import Earth from "@/components/SliderEarth.vue";
 
 export default {
   name: "Home",
   components: {
-    MainEarth,
+    Earth,
   },
 };
 </script>
